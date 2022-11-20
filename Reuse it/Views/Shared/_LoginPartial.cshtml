@@ -4,12 +4,24 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul class="navbar-nav">
+
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-    </li>
+    <div class="dropdown">
+        <a class="btn dropdown-toggle" href="#" role="button" id="SellRent" data-bs-toggle="dropdown" aria-expanded="false"> @UserManager.GetUserName(User) </a>
+        <ul class="dropdown-menu" aria-labelledby="SellRent">
+            <li class="dropdown dropend">
+                <a class="dropdown-item dropdown-toggle" href="#" id="SellRentMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sell or/and Rent</a>
+                <ul class="dropdown-menu" aria-labelledby="SellRentMenu">
+                    <li><a class="dropdown-item" asp-action="Sell" asp-controller="SellRent">Sell</a></li>
+                    <li><a class="dropdown-item" asp-action="Rent" asp-controller="SellRent">Rent</a></li>
+                    <li><a class="dropdown-item" asp-action="SellOrRent" asp-controller="SellRent">Sell or Rent</a></li>
+                </ul>
+            </li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+
+    </div>
     <li class="nav-item">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
@@ -25,4 +37,14 @@ else
         <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
 }
-</ul>
+
+<script>
+    let dropdowns = document.querySelectorAll('.dropdown-toggle')
+    dropdowns.forEach((dd) => {
+        dd.addEventListener('click', function (e) {
+            var el = this.nextElementSibling
+            el.style.display = el.style.display === 'block' ? 'none' : 'block'
+        })
+    })
+
+</script>
