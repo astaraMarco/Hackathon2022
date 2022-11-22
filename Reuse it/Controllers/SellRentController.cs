@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Reuse_it.Models;
+using Reuse_it.Models.services;
 
 namespace Reuse_it.Controllers
 {
@@ -11,9 +13,11 @@ namespace Reuse_it.Controllers
         }
         public IActionResult Sell()
         {
-
             return View();
         }
+
+       
+
         public IActionResult Rent()
         {
 

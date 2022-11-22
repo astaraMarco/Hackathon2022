@@ -1,0 +1,157 @@
+﻿@{
+    ViewData["title"] = "Home buy or rent";
+}
+@model List<ProductViewModel>
+
+<link rel="stylesheet" href="~/css/BuyRent/StyleSheet.css" />
+
+<div class="container">
+    <h1>@ViewData["Title"] page title</h1>
+</div>
+
+<div class="container">
+    <h3>Oggetti in vendita</h3>
+    <!-- Carousel wrapper -->
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach (var product in Model)
+            {
+
+                <div class="carousel-item">
+                    <div class="card-body">
+                        <div class="img-wrapper">
+                            <img src="@product.foto.pathFoto" class="d-block w-100" alt="...">
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">@product.nome</h5>
+                            <p class="card-text">
+                                <a asp-action="ProductDetail" asp-route-id=@product.Id>show detail</a>
+                            </p>
+                            <div class="btn-toolbar card" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group mr-2" role="group" aria-label="First group">
+                                    <a style="float: left; "
+                                   asp-action="Buy" class="btn btn-primary">Buy @product.priceBuy</a>
+                                </div>
+                                <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                    <a style="float: right; align-items: flex-end"
+                                   asp-action="Rent"
+                                   class="btn btn-secondary">Rent @product.priceRent/h</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+            
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Carousel wrapper -->
+</div>
+<script type="text/javascript" src="/lib/jquery/dist/jquery.min.js">
+    
+</script>
+<script>
+
+    var multipleCardCarousel = document.querySelector(
+        "#carouselExampleControls"
+    );
+        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+        var cardWidth = $(".carousel-item").width();
+        var scrollPosition = 0;
+        $(".carousel-control-next").on("click", function () {
+            if (scrollPosition < (carouselWidth - cardWidth * 4)) { //check if you can go any further
+                scrollPosition += cardWidth;  //update scroll position
+                $(".carousel-inner").animate({ scrollLeft: scrollPosition }, 600); //scroll left
+            }
+        });
+        $(".carousel-control-prev").on("click", function () {
+            if (scrollPosition > 0) {
+                scrollPosition -= cardWidth;
+                $(".carousel-inner").animate(
+                    { scrollLeft: scrollPosition },
+                    600
+                );
+            }
+        });
+        var carousel = new bootstrap.Carousel(multipleCardCarousel, {
+            interval: false
+        });
+
+
+
+       
+
+
+</script>
+
+<!--
+    <div id="carouselMultiItemExample" class="carousel slide carousel-dark text-center" data-mdb-ride="carousel">
+
+        
+        <div class="carousel-inner py-4">
+
+            <div class="container">
+
+
+                <div class="row">
+
+
+                    <button class="carousel-control-prev position-relative" type="button" data-mdb-target="#carouselMultiItemExample" data-mdb-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+
+
+                    foreach (ProductViewModel product in Model)
+                    {
+                        <div class="card">
+                            <img src="product.foto.pathFoto"
+                             class="card-img-top"
+                             alt="Waterfall" />
+                            <div class="card-body">
+                                <h6 class="card-title">product.nome</h6>
+                                <p class="card-text">
+                                    <a asp-action="ProductDetail" asp-route-id=product.Id>show detail</a>
+                                </p>
+                                <div class="btn-toolbar card--" role="toolbar" aria-label="Toolbar with button groups">
+                                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                                        <a style="float: left"
+                                       asp-action="Buy" class="btn btn-primary">Buy product.priceBuy</a>
+                                    </div>
+                                    <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                        <a style="float: right "
+                                       asp-action="Rent"
+                                       class="btn btn-secondary">Rent product.priceRent/h</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                       
+                    }
+                    
+                    <button class="carousel-control-next position-relative" type="button" data-mdb-target="#carouselMultiItemExample" data-mdb-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                
+
+            </div>
+
+        </div>
+
+    </div>
+-->
