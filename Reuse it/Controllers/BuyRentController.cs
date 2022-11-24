@@ -7,13 +7,19 @@ namespace Reuse_it.Controllers
 {
     public class BuyRentController : Controller
     {
+        private readonly IProductService productService;
+        public BuyRentController(IProductService p)
+        {
+
+            productService = p;
+        }
         public IActionResult Home() {
-            ProductService productService = new ProductService();
-            List<ProductViewModel> pvmList = productService.GetProduct();
+            
+            List<ProductViewModel> pvmList = productService.GetProducts();
             return View(pvmList);
         }
         public IActionResult ProductDetail(int id) {
-            ProductService productService = new ProductService();
+            
             ProductViewModel pvm = productService.GetProduct(id);
             return View(pvm);
         }
