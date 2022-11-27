@@ -23,5 +23,23 @@ namespace Reuse_it.Models.Infrastructure
             }
 
         }
+
+         public bool QueryAdd(string query){
+
+            using (var conn = new MySqlConnection("Server=localhost;Database=reuseit_db;User=root;Password=;"))
+            {
+                conn.Open();
+                using (var cmb = new MySqlCommand(query, conn))
+                {
+                    int result = cmb.ExecuteNonQuery();
+                    if (!(result == -1)) { 
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        }
+
+
     }
 }

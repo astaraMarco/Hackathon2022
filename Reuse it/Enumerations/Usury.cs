@@ -1,6 +1,8 @@
-﻿namespace Reuse_it.Enumerations
+﻿using System.Data.Entity.Core.Metadata.Edm;
+
+namespace Reuse_it.Enumerations
 {
-    public enum Usury
+    public enum Usury 
     {
         nuovo,
         ottimo,

@@ -1,9 +1,48 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Reuse_it.Enumerations
+@using Reuse_it.Models.viewModels
+
 @{
     ViewData["Title"] = "Sell";
 }
+@model ProductViewModel
+
+@using (Html.BeginForm("SellCheck", "SellRent", FormMethod.Post, new { enctype = "multipart/form-data" })){
+    <div class="form-group">
+    <p>
+        name
+    </p>
+    @Html.EditorFor(m => m.nome)
+
+    <p>
+        usury
+    </p>
+
+    <label asp-for="usura" class="control-label"></label>
+    <select asp-for="usura" asp-items="Html.GetEnumSelectList<Usury>()" class="form-control"></select>
+    <span asp-validation-for="usura" class="text-danger"></span>
+
+     @Html.EditorFor(m => m.size)
+    
+     
+     <p>
+        descrizione
+    </p>
+    @Html.EditorFor(m => m.descrizione)
+
+    @Html.EditorFor(m => m.foto)
+    <p>
+        prezzo di vendita
+    </p>
+    @Html.EditorFor(m => m.priceBuy)
+    <input id="Submit" type="submit" value="submit" />
+
+
+</div>
+}
+
+
+
+<!--
 <script type="text/javascript">
     function controllaInvio() {
         var val = document.getElementById("cprezzo");
@@ -22,6 +61,8 @@
         text-align: center;
         padding: 0.5em 1em;
         margin: 5px;
+
+        
     }
 
     #btn {
@@ -39,30 +80,42 @@
 </style>
 
 <div id="container">
-    <h1>@ViewData["Title"]</h1>
+    <h1>ViewData["Title"]</h1>
+
     <p>Inserisci gli articoli da vendere</p>
-    <p>Nome: <input style="margin-left:65px;" type="text" class="c_testo"></p>
-    <p>Descrizione: <input style="margin-left:27px;" type="text" class="c_testo"></p>
-    <p>
-        Grandezza:
-        <input style="margin-left:32px;" type="text" class="c_testo">
-        <select name="grandezza" id="grandezza">
-            <option value="m">m</option>
-            <option value="cm">cm</option>
-            <option value="mm">mm</option>
-        </select>
-    </p>
+    <form method="post" name="form" enctype="multipart/form-data">
+    <p>Nome: <input name="nome" style="margin-left:65px;" type="text" class="c_testo"></p>
+    <p>Descrizione: <input name="descrizione" style="margin-left:27px;" type="text" class="c_testo"></p>
+    <div>
+            <p>
+                Grandezza:
+                <input name="height" style="margin-left:5px; width: 2px" type="text" class="c_testo">
+                <input name="width" style="width: 2px;" type="text" class="c_testo">
+                <input name="depth" style="width: 2px;" type="text" class="c_testo">
+                <select name="unit" id="unit">
+                    <option value="m">m</option>
+                    <option value="cm">cm</option>
+                    <option value="mm">mm</option>
+                </select>
+            </p>
+    </div>
+    
+
     <p>
         Dettagli usura:
-        <select style="margin-left:5px;" name="condizioni" id="condizioni">
-            <option value="1">1- Come nuovo</option>
-            <option value="2">2- Ottimo</option>
-            <option value="3">3- Buono</option>
-            <option value="4">4- Discreto</option>
-            <option value="5">5- Pessimo</option>
+        <select style="margin-left:5px;" name="usura" id="condizioni">
+                <option value="nuovo">1- Come nuovo</option>
+                <option value="ottimo">2- Ottimo</option>
+                <option value="buono">3- Buono</option>
+                <option value="discreto">4- Discreto</option>
+                <option value="pessimo">5- Pessimo</option>
         </select>
     </p>
-    <input type="file" style="margin-left:110px;" value="foto">
-    <p>Prezzo: <input style="margin-left:55px;" id="cprezzo" class="c_testo" type="text">€</p>
-    <input id="btn" type="button" value="Metti in vendita" onclick="controllaInvio()">
+        
+        <input name="foto" type="file" style="margin-left:110px;">
+        <p>Prezzo: <input style="margin-left:55px;" name="priceBuy" class="c_testo" type="text">€</p>
+    <input asp-action="SellCheck" id="btn" type="submit" value="Metti in vendita" >
+    </form>
+
 </div>
+-->

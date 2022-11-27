@@ -1,0 +1,13 @@
+﻿@using Reuse_it.Enumerations
+@model Size
+
+<p>
+   Grandezza:
+   @Html.TextBoxFor(m => m.height)
+    @Html.TextBoxFor(m => m.width)
+    @Html.TextBoxFor(m => m.depth)
+    <label asp-for="unit" class="control-label"></label>
+    <select asp-for="unit" asp-items="Html.GetEnumSelectList<Unit>()" class="form-control"></select>
+    <span asp-validation-for="unit" class="text-danger"></span>
+
+</p>
