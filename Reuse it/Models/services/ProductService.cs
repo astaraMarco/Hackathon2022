@@ -23,11 +23,8 @@ namespace Reuse_it.Models.services
             return selled;
         }
 
-        public bool addProduct(string query) {
-
-            
-
-            return db.QueryAdd(query); ;
+        public Task<bool> addProduct(ProductViewModel pr) {
+            return db.QueryAdd(pr); ;
         }
 
 

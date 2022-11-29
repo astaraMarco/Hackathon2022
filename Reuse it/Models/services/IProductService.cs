@@ -6,7 +6,7 @@ namespace Reuse_it.Models.services
     {
         ProductViewModel GetProduct(int id);
         List<ProductViewModel> GetProducts(); 
-        public bool addProduct(string query);
+        public Task<bool> addProduct(ProductViewModel query);
 
     }
 }

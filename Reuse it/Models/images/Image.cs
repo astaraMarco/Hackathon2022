@@ -17,12 +17,32 @@ namespace Reuse_it.Models.images
             this.pathFoto = imagePath;
         }
         public async Task<bool> ConvertIFromFileInPath() {
-            pathFoto = Path.Combine($"{Directory.GetCurrentDirectory()}/wwwroot/image/tmp/",PostedFile.FileName);
+            string tmp = Path.Combine($"{Directory.GetCurrentDirectory()}\\wwwroot\\image\\tmp\\",PostedFile.FileName);
+            pathFoto = "";
+            
+            foreach (string s in tmp.Split("\\")) {
+                pathFoto = Path.Combine(pathFoto, $"{s}/");
+            }
+            pathFoto=pathFoto.Remove(pathFoto.Length - 1);
             using (var stream = new FileStream(pathFoto, FileMode.Create)) { 
                 await PostedFile.CopyToAsync(stream);
                 return true;
             }
 
+        }
+        public byte[] convertToByte() {
+
+            if (this.PostedFile.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    PostedFile.CopyTo(ms);
+                    return ms.ToArray();
+
+
+                }
+            }
+            return null;
         }
     }
 }
