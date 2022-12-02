@@ -2,6 +2,7 @@
 using Reuse_it.Models.services;
 using Reuse_it.Models;
 using Reuse_it.Models.viewModels;
+using RestSharp;
 
 namespace Reuse_it.Controllers
 {
@@ -15,21 +16,26 @@ namespace Reuse_it.Controllers
         }
         public IActionResult Home() {
             
-            List<ProductViewModel> pvmList = productService.GetProducts();
+            var pvmList = productService.GetProducts();
             return View(pvmList);
         }
         public IActionResult ProductDetail(int id) {
             
-            ProductViewModel pvm = productService.GetProduct(id);
+            var pvm = productService.GetProduct(id);
             return View(pvm);
         }
 
         public IActionResult Buy(int id)
         {
+// HttpClient client = new HttpClient();
+
+            var client = new RestClient("https://api.myorg.com");
+            
             return RedirectToAction(nameof(Home));
         }
         public IActionResult Rent(int id)
         {
+
             return RedirectToAction(nameof(Home));
         }
     }

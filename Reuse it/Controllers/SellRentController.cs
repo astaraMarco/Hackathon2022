@@ -1,18 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
-using MySql.Data.MySqlClient;
-using MySqlX.XDevAPI;
-using Reuse_it.Enumerations;
-using Reuse_it.Models;
 using Reuse_it.Models.services;
 using Reuse_it.Models.viewModels;
-using System.Data.Entity;
-using System.Drawing;
-using System.Reflection.Metadata;
-using System.Security.Policy;
-using System.Text;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Reuse_it.Controllers
 {
@@ -33,9 +21,9 @@ namespace Reuse_it.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> SellCheck(ProductViewModel product)
+        public IActionResult SellCheck(ProductViewModel product)
         {
-            await products.addProduct(product);
+            var result = products.addProductSell(product);
             return RedirectToAction(nameof(Sell));
         }
 

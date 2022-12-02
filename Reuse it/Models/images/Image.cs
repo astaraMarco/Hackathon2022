@@ -30,7 +30,7 @@ namespace Reuse_it.Models.images
             }
 
         }
-        public byte[] convertToByte() {
+        public byte[]? convertToByte() {
 
             if (this.PostedFile.Length > 0)
             {
@@ -43,6 +43,15 @@ namespace Reuse_it.Models.images
                 }
             }
             return null;
+        }
+        public static byte[]? convertToUpload(image im) {
+
+            byte[]? data = im.convertToByte();
+            if (data == null)
+            {
+                return null;
+            }
+            return data;
         }
     }
 }

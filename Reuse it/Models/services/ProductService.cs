@@ -15,16 +15,21 @@ namespace Reuse_it.Models.services
         {
             var selled = new List<ProductViewModel>();
             string query = "select * from prodotto,foto where fk_prodotto = id_prodotto";
-            DataSet productsSet = db.Query(query);
+            var productsSet = db.Select(query);
             foreach (DataRow product in productsSet.Tables[0].Rows) {
-                ProductViewModel productViewModel = ProductViewModel.mapRow(product);
+                ProductViewModel productViewModel = ProductViewModel.mapRowSell(product);
                 selled.Add(productViewModel);
             }
             return selled;
         }
 
-        public Task<bool> addProduct(ProductViewModel pr) {
-            return db.QueryAdd(pr); ;
+        public async Task<int> addProductSell(ProductViewModel pr) {
+            string campi = "nome:descrizione:grandezza:usura:price_buy";
+            string campiFoto = "img:path:fk_prodotto";
+            var esito = await db.InsertProduct(campi, campiFoto, pr);
+
+            return esito;
+            
         }
 
 

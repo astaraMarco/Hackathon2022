@@ -31,12 +31,21 @@
                             <div class="btn-toolbar card" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group mr-2" role="group" aria-label="First group">
                                     <a style="float: left; "
-                                   asp-action="Buy" class="btn btn-primary">Buy @product.priceBuy</a>
+                                   asp-action="Buy" class="btn btn-primary">Buy @product.priceBuy€</a>
                                 </div>
                                 <div class="btn-group mr-2" role="group" aria-label="Second group">
-                                    <a style="float: right; align-items: flex-end"
+                                    @if (product.priceRent == null)
+                                    {
+                                        <button style="float: right; align-items: flex-end"
+                                    asp-action="Rent"
+                                    class="btn btn-secondary" disabled>Rent 0/h</button>
+
+                                    }else{
+                                        <a style="float: right; align-items: flex-end"
                                    asp-action="Rent"
                                    class="btn btn-secondary">Rent @product.priceRent/h</a>
+                                    }
+                                    
                                 </div>
 
                             </div>

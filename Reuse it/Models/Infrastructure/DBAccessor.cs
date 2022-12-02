@@ -1,14 +1,16 @@
-﻿
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MySql.Data.MySqlClient;
+using Reuse_it.Models.images;
 using Reuse_it.Models.viewModels;
 using System.Data;
+using System.Security.Cryptography;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Reuse_it.Models.Infrastructure
 {
     public class DBAccessor : IDBAccessor
     {
-        public DataSet Query(string query)
+        public DataSet Select(string query)
         {
 
             using (var conn = new MySqlConnection("Server=localhost;Database=reuseit_db;User=root;Password=;")) {
@@ -26,42 +28,130 @@ namespace Reuse_it.Models.Infrastructure
 
         }
 
-         public async Task<bool> QueryAdd(ProductViewModel pr){
+       
+         public async Task<int> InsertProduct(string campi,string campiFoto,ProductViewModel pr){
+
+           
+            string query = this.creaQuery("prodotto", campi.Split(":"));
+            query += this.creaQuery("foto", campiFoto.Split(":"));
+
+
             using (var conn = new MySqlConnection("Server=localhost;Database=reuseit_db;User=root;Password=;"))
             {
-                using (var cmb = new MySqlCommand("", conn))
+                using (MySqlCommand? cmb = new MySqlCommand("", conn))
                 {
+                    conn.Open();
+                    cmb.CommandText = query;
+
+                    foreach (string s in campi.Split(":"))
+                    {
+                        switch (s)
+                        {
+
+                            case "nome":
+                                cmb.Parameters.AddWithValue($"@{s}", pr.nome);
+                                break;
+                            case "descrizione":
+                                cmb.Parameters.AddWithValue($"@{s}", pr.descrizione);
+                                break;
+                            case "grandezza":
+                                cmb.Parameters.AddWithValue($"@{s}", pr.size.ToString());
+                                break;
+                            case "usura":
+                                cmb.Parameters.AddWithValue($"@{s}", pr.usura.ToString());
+                                break;
+                            case "price_buy":
+                                cmb.Parameters.AddWithValue($"@{s}", pr.priceBuy);
+                                break;
+                            case "price_rent":
+                                cmb.Parameters.AddWithValue($"@{s}", pr.priceRent);
+
+                                break;
+                            default:
+                                return -1;
+                        }
+                    }
 
                     await pr.foto.ConvertIFromFileInPath();
-                    byte[] data = pr.foto.convertToByte();
-                    if (data == null) {
-                        return false;
+                    var data = image.convertToUpload(pr.foto);
+                    if (data == null)
+                    {
+                        return -1;
                     }
-                    conn.Open();
-                
-                    cmb.CommandText = "INSERT INTO `prodotto`( `nome`, `descrizione`, `grandezza`, `usura`, `price_buy`, `price_rent`) " +
-                        "VALUES (@pr.nome,@pr.descrizione,@pr.size,@pr.usura,@pr.priceBuy,'NULL');\r\n" +
-                    "INSERT INTO `foto`(`img`,`fk_prodotto`) VALUES (@Data,last_insert_id()) ";
-                    MySqlParameter blob = new MySqlParameter("@Data", MySqlDbType.Blob, data.Length);
+                    MySqlParameter blob = new MySqlParameter("@img", MySqlDbType.Blob, data.Length);
                     blob.Value = data;
+                    foreach (string s in campiFoto.Split(":"))
+                    {
+                        switch (s)
+                        {
+                            case "img":
 
-                    cmb.Parameters.Add(blob);
-                    cmb.Parameters.AddWithValue("@pr.nome", pr.nome);
-                    cmb.Parameters.AddWithValue("@pr.descrizione", pr.descrizione);
-                    cmb.Parameters.AddWithValue("@pr.size", pr.size.ToString());
-                    cmb.Parameters.AddWithValue("@pr.usura", pr.usura.ToString());
-                    cmb.Parameters.AddWithValue("@pr.priceBuy", pr.priceBuy);
-                   
+                                cmb.Parameters.Add(blob);
+                                break;
+                            case "path":
+                                cmb.Parameters.AddWithValue($"@{s}", pr.foto.pathFoto);
+                                break;
+                            case "fk_prodotto":
+                                break;
 
-                    int result = cmb.ExecuteNonQuery();
-                    if (!(result == -1)) { 
-                        return true;
+
+                        }
                     }
-                    return false;
+                    //cmb = await this.InsertImage(campiFoto,pr.foto,cmb).Result;
+                    
+                    var result = await cmb.ExecuteNonQueryAsync();
+                    if (!(result == -1)) {
+                        return 1;
+                    }
+                    return 0;
                 }
             }
         }
 
+        private string creaQuery(string tabella,string[] campi ) {
+
+
+
+            string query = $"INSERT INTO `{tabella}`(";
+            foreach (var s in campi)
+            {
+
+                if (campi[(campi.Length - 1)] == s)
+                {
+                    query += $"`{s}`";
+                }
+                else
+                {
+                    query += $"`{s}`,";
+                }
+
+            }
+            query += $") VALUES (";
+            for (int i = 0; i < campi.Length; i++)
+            {
+                string s = campi[i];
+
+                if (s == "fk_prodotto")
+                {
+                    query += "last_insert_id()";
+                }
+                else {
+                    query += $"@{s}";
+                    
+                }
+                if (i == campi.Length - 1)
+                {
+                    query += $"); ";
+                }
+                else
+                {
+                    query += $", ";
+                }
+            }
+
+
+            return query;
+        }
 
     }
 }

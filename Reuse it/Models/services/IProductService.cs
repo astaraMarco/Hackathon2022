@@ -5,8 +5,8 @@ namespace Reuse_it.Models.services
     public interface IProductService
     {
         ProductViewModel GetProduct(int id);
-        List<ProductViewModel> GetProducts(); 
-        public Task<bool> addProduct(ProductViewModel query);
+        List<ProductViewModel> GetProducts();
+        Task<int> addProductSell(ProductViewModel pr);
 
     }
 }
