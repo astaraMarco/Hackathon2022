@@ -6,35 +6,59 @@
 }
 @model ProductViewModel
 
+<style>
+    input{
+      border-radius: 4px;
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    #Submit {
+      border-radius: 4px;
+      background-color: deepskyblue;
+      border: none;
+      color: black;
+      text-align: center;
+      font-size: 1.5em;
+      padding: 0.5em 1em;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    #p_usura > select {
+        width: 100px;
+        display: inline
+    }
+</style>
+
 @using (Html.BeginForm("SellCheck", "SellRent", FormMethod.Post, new { enctype = "multipart/form-data" })){
     <div class="form-group">
-    <p>
-        name
-    </p>
-    @Html.EditorFor(m => m.nome)
-
-    <p>
-        usury
-    </p>
-
-    <label asp-for="usura" class="control-label"></label>
-    <select asp-for="usura" asp-items="Html.GetEnumSelectList<Usury>()" class="form-control"></select>
-    <span asp-validation-for="usura" class="text-danger"></span>
+        <p>
+        Nome: @Html.EditorFor(m => m.nome)
+        </p>
+        
+        <p id="p_usura">
+       Usura:
+       <select asp-for="usura" asp-items="Html.GetEnumSelectList<Usury>()" class="form-control"></select>
+           <span asp-validation-for="usura" class="text-danger"></span>
+        </p>
 
      @Html.EditorFor(m => m.size)
     
      
      <p>
-        descrizione
+            Descrizione: @Html.EditorFor(m => m.descrizione)
     </p>
-    @Html.EditorFor(m => m.descrizione)
 
-    @Html.EditorFor(m => m.foto)
     <p>
-        prezzo di vendita
+            Inserisci foto: @Html.EditorFor(m => m.foto)
     </p>
-    @Html.EditorFor(m => m.priceBuy)
-    <input id="Submit" type="submit" value="submit" />
+
+    <p>
+            Prezzo di vendita: @Html.EditorFor(m => m.priceBuy)
+    </p>
+    
+    <input id="Submit" type="submit" value="Metti in vendita" />
 
 
 </div>

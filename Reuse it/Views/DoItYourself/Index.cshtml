@@ -2,16 +2,65 @@
     ViewData["Title"] = "Do it yourself";
 }
 <div class="container">
-    <h1>@ViewData["Title"] page title</h1>
-    <p>paragraph of @ViewData["Title"]</p>
+    <h1>@ViewData["Title"]</h1>
 </div>
-<iframe width="380" height="240" src="https://www.youtube.com/embed/oFlXxXlMJBg" 
-title="come costruire una pala eolica" 
-frameborder="1" 
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-allowfullscreen></iframe>
+<div class="container">
+<!-- Carousel wrapper -->
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+             <iframe width="380" height="240" src="https://www.youtube.com/embed/oFlXxXlMJBg"
+                    title="come costruire una pala eolica"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/jigsS21LQBw"
+                    title="40 SEMPLICI E GENIALI IDEE PER RICICLARE"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+            </iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/YZp5lLve6Pg"
+                    title="Come RIUTILIZZARE BOTTIGLIE di PLASTICA: 10 idee FACILISSIME"
+                    frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+                </iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/ls6xBoy4F-I" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen></iframe>
+<!-- Carousel wrapper -->
+</div>
+    </div>
+</div>
+<script type="text/javascript" src="/lib/jquery/dist/jquery.min.js">
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/RaB2lTrbqpE" 
-title="YouTube video player" frameborder="0" allow="accelerometer; 
-autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-allowfullscreen></iframe>
+</script>
+<script>
+
+    var multipleCardCarousel = document.querySelector(
+        "#carouselExampleControls"
+    );
+    var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+    var cardWidth = $(".carousel-item").width();
+    var scrollPosition = 0;
+    $(".carousel-control-next").on("click", function () {
+        if (scrollPosition < (carouselWidth - cardWidth * 4)) { //check if you can go any further
+            scrollPosition += cardWidth;  //update scroll position
+            $(".carousel-inner").animate({ scrollLeft: scrollPosition }, 600); //scroll left
+        }
+    });
+    $(".carousel-control-prev").on("click", function () {
+        if (scrollPosition > 0) {
+            scrollPosition -= cardWidth;
+            $(".carousel-inner").animate(
+                { scrollLeft: scrollPosition },
+                600
+            );
+        }
+    });
+    var carousel = new bootstrap.Carousel(multipleCardCarousel, {
+        interval: false
+    });
+</script>
