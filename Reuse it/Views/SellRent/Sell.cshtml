@@ -25,12 +25,24 @@
       margin: 5px;
     }
 
+    #p_descrizione > input {
+        width: 25%;
+        height: 100px;
+        text-align: left
+    }
+
     #p_usura > select {
         width: 100px;
         display: inline
     }
+    #p_titolo{
+        font-size:23px
+    }
 </style>
 
+<div class="container">
+<h1>Sell</h1>
+<p id="p_titolo">Inserisci gli articoli da vendere</p>
 @using (Html.BeginForm("SellCheck", "SellRent", FormMethod.Post, new { enctype = "multipart/form-data" })){
     <div class="form-group">
         <p>
@@ -46,7 +58,7 @@
      @Html.EditorFor(m => m.size)
     
      
-     <p>
+     <p id="p_descrizione">
             Descrizione: @Html.EditorFor(m => m.descrizione)
     </p>
 
@@ -63,3 +75,4 @@
 
 </div>
 }
+</div>

@@ -29,8 +29,20 @@
         cursor: pointer;
         margin: 5px;
     }
+    #p_titolo{
+        font-size:23px
+    }
+
+    #p_descrizione > input {
+        width: 25%;
+        height: 100px;
+        text-align: left
+    }
 </style>
 
+<div class="container">
+<h1>Rent</h1>
+<p id="p_titolo">Inserisci gli articoli da mettere in noleggio</p>
 @using (Html.BeginForm("RentCheck", "SellRent", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-group">
@@ -47,7 +59,7 @@
         @Html.EditorFor(m => m.size)
 
 
-        <p>
+        <p id="p_descrizione">
             Descrizione: @Html.EditorFor(m => m.descrizione)
         </p>
 
@@ -64,3 +76,4 @@
 
     </div>
 }
+</div>

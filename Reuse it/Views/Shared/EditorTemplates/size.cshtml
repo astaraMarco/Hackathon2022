@@ -6,9 +6,13 @@
         display:inline;
         width:75px
     }
+
+    #div_size > input{
+        width:100px
+    }
 </style>
 
-<div>
+<div id="div_size">
    Grandezza:
         @Html.TextBoxFor(m => m.height)
         @Html.TextBoxFor(m => m.width)
