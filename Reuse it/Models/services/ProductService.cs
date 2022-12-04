@@ -35,7 +35,14 @@ namespace Reuse_it.Models.services
 
         public ProductViewModel GetProduct(int id)
         {
-            return new ProductViewModel();
+
+            string query = "select * from prodotto,foto where id_prodotto ="+id.ToString();
+            var productsSet = db.Select(query);
+            var product = productsSet.Tables[0].Rows[0];
+            ProductViewModel productViewModel = ProductViewModel.mapRowSell(product);
+
+            return productViewModel;
+
 
         }
     }

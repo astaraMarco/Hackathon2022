@@ -31,7 +31,7 @@
                             <div class="btn-toolbar card" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group mr-2" role="group" aria-label="First group">
                                     <a style="float: left; "
-                                   asp-action="Buy" class="btn btn-primary">Buy @product.priceBuy€</a>
+                                   asp-action="Buy" asp-route-id=@product.Id class="btn btn-primary">Buy @product.priceBuy€</a>
                                 </div>
                                 <div class="btn-group mr-2" role="group" aria-label="Second group">
                                     @if (product.priceRent == null)

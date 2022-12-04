@@ -27,14 +27,23 @@ namespace Reuse_it.Controllers
             return RedirectToAction(nameof(Sell));
         }
 
-       
-
         public IActionResult Rent()
         {
 
             return View();
         }
+
+        public IActionResult RentCheck()
+        {
+
+            return View();
+        }
         public IActionResult SellOrRent()
+        {
+
+            return View();
+        }
+        public IActionResult SellRentCheck()
         {
 
             return View();

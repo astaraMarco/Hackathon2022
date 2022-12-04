@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Reuse_it.Areas.Identity.Data;
+using Reuse_it.Models.Api;
 using Reuse_it.Models.Infrastructure;
 using Reuse_it.Models.services;
 
@@ -17,6 +18,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IProductService,ProductService>();
 builder.Services.AddTransient<IDBAccessor,DBAccessor>();
+builder.Services.AddTransient<IApiPostman, ApiPostman>();
+builder.Services.AddTransient<ISmartBoxServices,SmartBoxServices>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

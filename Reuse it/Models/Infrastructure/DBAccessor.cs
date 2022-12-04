@@ -29,7 +29,7 @@ namespace Reuse_it.Models.Infrastructure
         }
 
        
-         public async Task<int> InsertProduct(string campi,string campiFoto,ProductViewModel pr){
+        public async Task<int> InsertProduct(string campi,string campiFoto,ProductViewModel pr){
 
            
             string query = this.creaQuery("prodotto", campi.Split(":"));

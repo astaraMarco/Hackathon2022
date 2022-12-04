@@ -3,15 +3,17 @@ using Reuse_it.Models.services;
 using Reuse_it.Models;
 using Reuse_it.Models.viewModels;
 using RestSharp;
+using Reuse_it.Models.Api;
 
 namespace Reuse_it.Controllers
 {
     public class BuyRentController : Controller
     {
+        private readonly ISmartBoxServices smartBoxService;
         private readonly IProductService productService;
-        public BuyRentController(IProductService p)
+        public BuyRentController(IProductService p,ISmartBoxServices s)
         {
-
+            smartBoxService = s;
             productService = p;
         }
         public IActionResult Home() {
@@ -27,10 +29,25 @@ namespace Reuse_it.Controllers
 
         public IActionResult Buy(int id)
         {
-// HttpClient client = new HttpClient();
+            // HttpClient client = new HttpClient();
 
-            var client = new RestClient("https://api.myorg.com");
-            
+            List<SmartBoxViewModel>? smartBoxList = smartBoxService.SmartBoxGetWithRegions("Lazio");
+            List<SmartBoxViewModel>? smartBoxList2 = smartBoxService.SmartBoxGetWithProvincia(smartBoxList,"Roma");
+            List<SmartBoxViewModel>? smartBoxList3 = smartBoxService.SmartBoxGetWithNome(smartBoxList2,"Albano Laziale");
+
+            List<SlotViewModels> slots = smartBoxService.GetSlotsLockerFree(smartBoxList3[0].id);
+            if (slots != null)
+            {
+                smartBoxService.BlockingSlot(slots[0].id, id);
+
+
+            }
+
+            return View(slots[0].id);
+        }
+        public IActionResult sblockSlots(int id) {
+            var result = smartBoxService.ReleaseSlot(id);
+
             return RedirectToAction(nameof(Home));
         }
         public IActionResult Rent(int id)
