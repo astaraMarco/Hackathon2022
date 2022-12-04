@@ -1,9 +1,9 @@
-﻿@model int
+﻿@model int[]
 
 
 <div class="container">
-    <a class="btn btn-primary" asp-action="sblockSlots" asp-route-id=@Model>
-        sblock slots @Model
+    <a class="btn btn-primary" asp-action="sblockSlots" asp-route-id=@Model[0] asp-route-idProduct=@Model[1]>
+        Take object
     </a>
 
 </div>

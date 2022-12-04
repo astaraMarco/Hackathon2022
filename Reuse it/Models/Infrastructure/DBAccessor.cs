@@ -108,6 +108,23 @@ namespace Reuse_it.Models.Infrastructure
             }
         }
 
+        public async Task delete(string query) {
+
+            using (var conn = new MySqlConnection("Server=localhost;Database=reuseit_db;User=root;Password=;"))
+            {
+                conn.Open();
+                using (var cmb = new MySqlCommand(query, conn))
+                {
+                    var reader = await cmb.ExecuteNonQueryAsync();
+                    if (reader != -1) { 
+                    }
+                }
+            }
+
+
+        }
+
+
         private string creaQuery(string tabella,string[] campi ) {
 
 

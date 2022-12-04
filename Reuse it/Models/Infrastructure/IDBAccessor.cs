@@ -10,6 +10,6 @@ namespace Reuse_it.Models.Infrastructure
         DataSet Select(string query);
         Task<int> InsertProduct(string campi,string campiFoto,ProductViewModel pr);
 
-        
+        Task delete(string query);
     }
 }

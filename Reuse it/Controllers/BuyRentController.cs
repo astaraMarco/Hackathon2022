@@ -42,12 +42,16 @@ namespace Reuse_it.Controllers
 
 
             }
-
-            return View(slots[0].id);
+            int[] idObject= new int[2];
+            idObject[0] = slots[0].id;
+            idObject[1] = id;
+            return View(idObject);
         }
-        public IActionResult sblockSlots(int id) {
-            var result = smartBoxService.ReleaseSlot(id);
+        public IActionResult sblockSlots(int id,int idProduct) {
 
+
+            var result = smartBoxService.ReleaseSlot(id);
+            productService.DeleteProduct(idProduct);
             return RedirectToAction(nameof(Home));
         }
         public IActionResult Rent(int id)

@@ -7,6 +7,6 @@ namespace Reuse_it.Models.services
         ProductViewModel GetProduct(int id);
         List<ProductViewModel> GetProducts();
         Task<int> addProductSell(ProductViewModel pr);
-
+        Task DeleteProduct(int id);
     }
 }

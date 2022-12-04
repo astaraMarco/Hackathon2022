@@ -45,5 +45,14 @@ namespace Reuse_it.Models.services
 
 
         }
+
+        public async Task  DeleteProduct(int id)
+        {
+            var selled = new List<ProductViewModel>();
+            string query = "DELETE FROM `prodotto` WHERE `prodotto`.`id_prodotto` = " + id.ToString();
+            await db.delete(query);
+
+        }
+
     }
 }
